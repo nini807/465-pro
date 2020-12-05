@@ -19,7 +19,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class updatePrice extends AppCompatActivity {
@@ -27,9 +29,10 @@ public class updatePrice extends AppCompatActivity {
     Button updateprice;
     TextView pricefield;
     private DatabaseReference mDatabase;
-    String[] mobileArray = {"item001", "item002", "item003", "item004",
-            "item005", "item006", "item007", "item008"};
-
+    String[] mobileArray = {"item001"};
+List<String> itemsarray = new ArrayList<String>();
+ListView listView;
+ArrayAdapter adapter2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +46,17 @@ public class updatePrice extends AppCompatActivity {
         updateprice = findViewById(R.id.updateprice);
         pricefield = findViewById(R.id.pricefield);
 
+
+
         ArrayAdapter adapter = new ArrayAdapter<String>(this,
                 R.layout.activity_listview, mobileArray);
 
-        ListView listView = (ListView) findViewById(R.id.priceList);
+        listView = (ListView) findViewById(R.id.priceList);
         listView.setAdapter(adapter);
         readitems();
+        String[] strArray = itemsarray.toArray(new String[itemsarray.size()]);
+       
+
         updateprice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,14 +84,23 @@ public class updatePrice extends AppCompatActivity {
     }
 
     public void readitems() {
+
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot messageSnapshot : dataSnapshot.getChildren()) {
-                    System.out.println(dataSnapshot.getValue());
-                    System.out.println( messageSnapshot.child("item001").getValue());
+                    Iterable<DataSnapshot> iter = messageSnapshot.getChildren();
+                    while(iter.iterator().hasNext()){
+                        itemsarray.add(iter.iterator().next().getKey());
+                    }
+
+
 
                 }
+                adapter2 = new ArrayAdapter<String>(updatePrice.this,
+                        R.layout.activity_listview, itemsarray);
+                adapter2.notifyDataSetChanged();
+                listView.setAdapter(adapter2);
             }
 
             @Override
