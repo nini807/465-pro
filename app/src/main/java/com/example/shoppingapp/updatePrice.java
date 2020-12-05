@@ -1,8 +1,8 @@
 package com.example.shoppingapp;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -11,18 +11,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.FirebaseError;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class updatePrice extends AppCompatActivity {
     //variable buttons
@@ -31,6 +28,7 @@ public class updatePrice extends AppCompatActivity {
     private DatabaseReference mDatabase;
     String[] mobileArray = {"item001"};
 List<String> itemsarray = new ArrayList<String>();
+    List<String> specificitemsarray = new ArrayList<String>();
 ListView listView;
 ArrayAdapter adapter2;
 
@@ -53,9 +51,21 @@ ArrayAdapter adapter2;
 
         listView = (ListView) findViewById(R.id.priceList);
         listView.setAdapter(adapter);
+        AdapterView.OnItemClickListener listener = new AdapterView.OnItemClickListener(){
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                readoneitem(position);
+            }
+
+
+        };
+        listView.setOnItemClickListener(listener);
+
+        listView.setItemsCanFocus(true);
         readitems();
         String[] strArray = itemsarray.toArray(new String[itemsarray.size()]);
-       
+
 
         updateprice.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,7 +84,7 @@ ArrayAdapter adapter2;
     }
 
     public void sample() {
-        Item item = new Item("item016", "green top", 15.00, 35);
+        Item item = new Item("item016", "green top", 16.00, 35);
         HashMap<String, Object> items = new HashMap<String, Object>();
         items.put("item016", item);
         mDatabase.child("items").updateChildren(items);
@@ -101,6 +111,32 @@ ArrayAdapter adapter2;
                         R.layout.activity_listview, itemsarray);
                 adapter2.notifyDataSetChanged();
                 listView.setAdapter(adapter2);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+
+        });
+    }
+    public void readoneitem(final int a) {
+
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot messageSnapshot : dataSnapshot.getChildren()) {
+                    Iterable<DataSnapshot> iter = messageSnapshot.getChildren();
+                    while(iter.iterator().hasNext()){
+                        specificitemsarray.add(iter.iterator().next().getKey());
+                        //System.out.println(iter.iterator().next().getValue());
+                    }
+
+
+System.out.println(messageSnapshot.child(specificitemsarray.get(a)).getValue());
+                }
+
             }
 
             @Override
