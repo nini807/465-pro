@@ -33,10 +33,13 @@ public class addRemove extends AppCompatActivity
     EditText quanity;
     EditText cost;
     private DatabaseReference mDatabase;
+    private DatabaseReference mPostReference;
     String[] mobileArray = {"item001"};
     ArrayAdapter adapter2;
     List<String> itemsarray = new ArrayList<String>();
     ListView listView;
+    Button remove;
+    String selecteditem;
 
     String selectitem ;
     @Override
@@ -48,10 +51,12 @@ public class addRemove extends AppCompatActivity
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         add = findViewById(R.id.ai);
+        remove = findViewById(R.id.removebutton);
         id = findViewById(R.id.editTextNumber);
         name = findViewById(R.id.itemName);
         quanity= findViewById(R.id.quanityfield);
         cost = findViewById(R.id.costfield);
+
 
 
 
@@ -64,7 +69,7 @@ public class addRemove extends AppCompatActivity
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+            selecteditem =itemsarray.get(position);
             }
 
 
@@ -86,6 +91,18 @@ public class addRemove extends AppCompatActivity
                  */
                 sample();
                 System.out.println("Entering date into firebase");
+            }
+        });
+        remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /*Intent intent = new Intent (updatePrice.this, loginSelect.class);
+                startActivity(intent);
+                finish();
+
+                 */
+                remove();
+                System.out.println("Deleting data");
             }
         });
 
@@ -136,7 +153,13 @@ public class addRemove extends AppCompatActivity
         });
     }
 
+    public void remove(){
+        mPostReference = mDatabase.child("items").child(selecteditem);
+        mPostReference.removeValue();
 
+
+
+    }
 
 }
 
