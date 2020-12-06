@@ -7,6 +7,36 @@
     android:background="#3F51B5">
 
     <TextView
+        android:id="@+id/pricetextview"
+        android:layout_width="84dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="20dp"
+        android:text="Enter Price:"
+        android:textSize="18sp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.166"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/arList" />
+
+    <EditText
+        android:id="@+id/costfield"
+        android:layout_width="205dp"
+        android:layout_height="36dp"
+        android:ems="10"
+        android:hint="ID"
+        android:inputType="number"
+        android:textSize="14sp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.549"
+        app:layout_constraintStart_toEndOf="@+id/id_Request"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.559" />
+
+    <TextView
         android:id="@+id/titleAR"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -26,27 +56,10 @@
         android:layout_width="393dp"
         android:layout_height="321dp"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/addTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleAR" />
-
-    <TextView
-        android:id="@+id/addTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="19dp"
-        android:layout_marginBottom="19dp"
-        android:text="Add Item"
-        android:textColor="#020101"
-        android:textStyle="bold"
-        android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/editTextNumber"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.515"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/arList" />
 
     <Button
         android:id="@+id/ai"
@@ -71,7 +84,7 @@
         android:textSize="18sp"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/editTextNumber2"
+        app:layout_constraintEnd_toStartOf="@id/quanityfield"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4"
@@ -81,7 +94,7 @@
         android:id="@+id/id_Request"
         android:layout_width="80dp"
         android:layout_height="34dp"
-        android:layout_marginTop="74dp"
+        android:layout_marginTop="84dp"
         android:text="Enter ID:"
         android:textSize="18sp"
         android:visibility="visible"
@@ -99,7 +112,7 @@
         android:textSize="18sp"
         android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/textView5"
-        app:layout_constraintEnd_toStartOf="@+id/editTextTextPersonName2"
+        app:layout_constraintEnd_toStartOf="@+id/itemName"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/id_Request" />
@@ -110,7 +123,7 @@
         android:layout_height="36dp"
         android:ems="10"
         android:hint="ID"
-        android:inputType="number"
+        android:inputType="text"
         android:textSize="14sp"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -120,21 +133,21 @@
         app:layout_constraintVertical_bias="0.644" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName2"
+        android:id="@+id/itemName"
         android:layout_width="211dp"
         android:layout_height="39dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Name"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/editTextNumber2"
+        app:layout_constraintBottom_toTopOf="@+id/quanityfield"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/textView4"
         app:layout_constraintTop_toBottomOf="@+id/editTextNumber" />
 
     <EditText
-        android:id="@+id/editTextNumber2"
+        android:id="@+id/quanityfield"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -145,6 +158,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/textView5"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2" />
+        app:layout_constraintTop_toBottomOf="@+id/itemName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

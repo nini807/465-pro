@@ -94,7 +94,7 @@ String selectitem ;
     public void sample() {
         String p = pricefield.getText().toString();
         double t = Double.parseDouble(p);
-        Item item = new Item(selectitem, "green top",t, 35);
+        Item item = new Item(selectitem,"green top",t,35);
         HashMap<String, Object> items = new HashMap<String, Object>();
         items.put(selectitem, item);
         mDatabase.child("items").updateChildren(items);

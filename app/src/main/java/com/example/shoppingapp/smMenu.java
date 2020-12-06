@@ -54,6 +54,7 @@ public class smMenu extends AppCompatActivity
     public void changepage (){
         Intent intent = new Intent(this,addRemove.class);
         startActivity(intent);
+        finish();
 }
     public void changepage1 (){
         Intent intent = new Intent(this,updateStock.class);
