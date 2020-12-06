@@ -16,10 +16,17 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
 
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class updatePrice extends AppCompatActivity {
     //variable buttons
@@ -31,6 +38,7 @@ List<String> itemsarray = new ArrayList<String>();
     List<String> specificitemsarray = new ArrayList<String>();
 ListView listView;
 ArrayAdapter adapter2;
+String selectitem ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,9 +92,11 @@ ArrayAdapter adapter2;
     }
 
     public void sample() {
-        Item item = new Item("item016", "green top", 16.00, 35);
+        String p = pricefield.getText().toString();
+        double t = Double.parseDouble(p);
+        Item item = new Item(selectitem, "green top",t, 35);
         HashMap<String, Object> items = new HashMap<String, Object>();
-        items.put("item016", item);
+        items.put(selectitem, item);
         mDatabase.child("items").updateChildren(items);
         System.out.println("Entering data into app");
 
@@ -128,13 +138,19 @@ ArrayAdapter adapter2;
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot messageSnapshot : dataSnapshot.getChildren()) {
                     Iterable<DataSnapshot> iter = messageSnapshot.getChildren();
-                    while(iter.iterator().hasNext()){
+                    while (iter.iterator().hasNext()) {
                         specificitemsarray.add(iter.iterator().next().getKey());
                         //System.out.println(iter.iterator().next().getValue());
                     }
 
 
-System.out.println(messageSnapshot.child(specificitemsarray.get(a)).getValue());
+                    System.out.println(messageSnapshot.child(specificitemsarray.get(a)).getKey());
+                    try {
+                        selectitem = messageSnapshot.child(specificitemsarray.get(a)).getKey();
+                      //  System.out.println(selectitem.get("price"));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
 
             }
@@ -146,6 +162,15 @@ System.out.println(messageSnapshot.child(specificitemsarray.get(a)).getValue());
 
 
         });
+
+    }
+
+    public static Map getMap(String obj) throws Exception {
+        Gson gson = new Gson();
+
+
+        Map result = gson.fromJson(obj.trim(), Map.class);
+        return result;
     }
 }
 
